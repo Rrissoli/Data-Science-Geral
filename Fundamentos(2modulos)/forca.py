@@ -1,23 +1,10 @@
 import random
 
-
-
-
-
-
 def imprimir_mensagem_boasvindas():
     print("*********************************")
     print("***Bem vindo ao jogo da Forca!***")
     print("*********************************")
-
-
-
-
-
-
-
-
-
+    
 def definir_variaveis():
     words = []
     arquivo = open('palavras.txt', 'r')
@@ -29,14 +16,9 @@ def definir_variaveis():
     palavra_secreta = words[numero].upper()
     return palavra_secreta
     
-    
-
-    
-
 def pede_chute():
     chute = input("Qual letra? ")
     return chute.strip().upper()
-
 
 def marca_chute_correto(palavra_secreta,chute, valores):
     index = 0
@@ -46,14 +28,16 @@ def marca_chute_correto(palavra_secreta,chute, valores):
                     print("Encontrei a letra {} na posição {}".format(letra, index))
                 index += 1
 
-
-
-      
-
-
-
 def inicializar_letras_acertadas(palavra):
     return ["_" for letra in palavra]
+
+
+
+
+
+
+
+
 
 
 
