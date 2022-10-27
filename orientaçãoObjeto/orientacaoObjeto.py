@@ -1,16 +1,19 @@
 from conta import Conta
+from datas import Data
 
 conta = Conta(123, 'bob', 100, 159)
-print(conta.titular)
+conta2 = Conta(1223, 'marcu', 100, 1555)
 
-def cria_conta(numero, titular, saldo, limite):
-    conta = {'numero': numero , "titular":titular, "saldo":saldo, "limite":limite}
-    return conta
 
-def deposita(conta,valor):
-    conta["saldo"] += valor
-    
-def saque(conta,valor):
-    conta["saldo"] -= valor
-def extrato(conta):
-    print("saldo é: {} ".format(conta["saldo"]))        
+conta.transferencia(conta2, 10000)
+
+conta2.extrato()
+conta.extrato()
+
+Conta.codigo_banco()
+
+
+
+
+
+      
