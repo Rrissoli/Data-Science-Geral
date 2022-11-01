@@ -37,13 +37,32 @@ class Serie(Programa):
     def __str__(self):    
         return f'{self.nome} - {self.ano} -  {self.temporadas} temporadas - {self.likes} Likes'
     
-class Playlist(list):
+class Playlist:
     def __init__(self,nome,programas):
         self.nome = nome
-        super().__init__(programas)
+        self._programas = programas
     
+    # aqui temos um duck type nessa função o getitem se preocupa com o comportamento e não com oq é 
+    # exemplo é um interavel? sim, então irá funcionar 
+    def __getitem__(self,item):
+        return self._programas[item]
     
+    # aqui temos o mesmo comportamento , a magic method esta preocupada apenas em verificar se o 
+    # comportamento pode ser um sized (se consegue extrair um tamanho/numero)
+    
+    def __len__(self):
+        return len(self._programas)
+  
+    
+# DATAS MODELS PYTHON
+#   INICIALIZAÇÃO = __init__
+#   REPRESENTAÇÃO = __str__ ,  __repr__
+#   CONTAINER, SEQUENCIA = __contains__, __iter__, __len__, __getitem__
+#   NUMERICOS = __add__ , __sub__. __mul__ , __mod__ 
 
+    
+        
+     
 
                        
     
@@ -73,10 +92,25 @@ filmes_e_series = [vingadores,barbaros,demolidor,tmep]
 
 plys_fim_de_semana = Playlist('fim de semana' , filmes_e_series)
 
-print(f'tamanho da playlist: {plys_fim_de_semana}')
+print(f'tamanho da playlist: {len(plys_fim_de_semana)}')
 
 
-for i in plys_fim_de_semana.programas:
+for i in plys_fim_de_semana:
     print(i)
-
 print(f'contem {demolidor in plys_fim_de_semana}')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

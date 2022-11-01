@@ -1,0 +1,63 @@
+# Vamos tentar entender o porquê de termos removido a herança da nossa classe. Neste caso, estávamos herdando de list, e esta ideia de que Playlist é um list não era tão verdade, já que o list possui vários comportamentos que desconhecíamos. Além disso, estávamos adicionando acoplamentos ao nosso modelo de classes.
+
+# Por meio de uma herança, acessamos todos os comportamentos que se encontram na classe superior, isto é, a superclasse. Nem sempre queremos tais comportamentos e, além disso, se tivermos que alterar algo nela, tudo que estiver interligado será afetado também, o que não é tão interessante.
+
+# Queremos encontrar uma alternativa para um encapsulamento de list sem depender tanto da outra classe, que mal conhecemos. No nosso código, temos que acessar a listagem de playlist_fim_de_semana para conseguirmos percorrê-la:
+
+# for programa in playlist_fim_de_semana.listagem:
+#     print(programa)COPIAR CÓDIGO
+# Em outro ponto, também acessamos listagem para conseguirmos ver a contagem de itens dentro dela:
+
+# print (f'Tamanho do playlist: {len(playlist_fim_de_semana.listagem)}')COPIAR CÓDIGO
+# O que não parece muito correto é que, anteriormente, estávamos usando Playlist como algo que pudéssemos iterar, e essa capacidade foi perdida. Se removermos .listagem no loop do for e rodarmos o código, receberemos o erro indicando que Playlist não é um objeto iterável.
+
+# Para nós, é desvantajoso perder esta funcionalidade. De que maneira poderemos fazer isso, então, sem termos que recorrer à herança?
+
+# No Python, existe um jeito de fazer com que a classe seja considerada iterável, sem a necessidade de usarmos a herança. É preciso, porém, entendermos o que algo iterável faz. No nosso caso, temos as definições de listagem() e tamanho(), valores que estão sendo retornados como propriedades.
+
+# Há um método mágico - um dunder method - que, ao ser implementado, permite que a classe seja considerada um objeto iterável: o _getitem_(). Este método define algo que é iterável e, no caso, precisaremos receber um item para que este seja repassado à lista interna que estamos utilizando, isto é, programas.
+
+# def _getitem_(self, item):
+#     return self._programas[item]COPIAR CÓDIGO
+# Assim, repassamos um item para a nossa lista interna de programas e, se rodarmos o código, já conseguimos iterar por todos os itens da playlist. Além disso, conseguimos fazer outras operações, como o seguinte trecho:
+
+# print(vingadores in playlist_fim_de_semana)COPIAR CÓDIGO
+# Isso nos permite sabermos se vingadores está em playlist_fim_de_semana. Ao executarmos, receberemos True. Ou seja, ganhamos o in e o for in. Também é possível exibirmos o primeiro item da lista ([0]) com o código abaixo:
+
+# print(playlist_fim_de_semana[0])COPIAR CÓDIGO
+# Na verdade, ao retirarmos a herança, tivemos uma melhoria de prática. Para tentar entendermos o porquê da herança ser boa ou ruim dependendo do seu propósito, vamos pensar nos motivos para seu uso:
+
+# Interface, quando queremos resolver questões relativas a polimorfismo;
+# Reuso do código, ou remoção de duplicações.
+# Quando estávamos herdando de uma lista, tínhamos apenas um motivo - a classe Playlist não precisa ser uma lista efetivamente, e sim ter algumas de suas funcionalidades. Ao mesmo tempo, queríamos alguns códigos que faziam sentido de estarem na nossa classe, como uma solução para mensurar quantidades na lista, sem termos que implementar ou verificar isto manualmente.
+
+# Ou então no caso de precisarmos iterar a lista sem termos que implementar tudo isso na classe Playlist, reaproveitando este código de algum outro lugar. Porém, isto se tornou inviável, pois estávamos pensando somente no reuso, e a interface não era tão importante. Da mesma forma, se outra classe quisesse usar a nossa como sendo um list, talvez não fizesse sentido, pela sua especificidade e por não ser exatamente um list, como uma classe built-in, nativa, do Python.
+
+# É importante levarmos estes dois motivos em conta ao decidirmos pela herança, isto é, que optemos por ela tanto para termos interface quanto para reuso de código, para que o polimorfismo seja absorvido e também para não termos código duplicado.
+
+# No caso do reuso, com a herança (que chamamos de extensão), estamos estendendo a classe, usando uma mais genérica e estendendo-a e, assim, somos capazes de usar ambas da mesma forma. Significa que teremos acesso a todo o código referente à superclasse.
+
+# Se quisermos algo diferente, teremos que, forçadamente, sobrescrever o código da superclasse. O outro jeito de fazermos reuso, que não é tão nocivo, nem envolve tanto acoplamento (evitando assim que quaisquer alterações feitas na superclasse não interfiram negativamente na subclasse), é a composição.
+
+# Em vez de termos um relacionamento é um, teremos Playlist tem um list, assim sendo, ninguém precisa saber como a lista interna funciona, mesmo se quisermos fazer uma implementação de lista diferente da que está sendo usada. Isso porque a nossa interface é mais simples, e não precisamos expor todos os métodos de list.
+
+# Com isso, não precisamos de herança para obtermos as vantagens que queríamos, e então nos questionamos quanto à sua real necessidade. Então, se você tiver apenas um dos motivos apresentados, é possível pensar um pouco melhor em uma solução.
+
+# No caso, temos uma playlist que se comporta como um(a) sequência iterável, e testamos a implementação do método mágico _getitem_(), que indica ao Python que a classe poderia ser usada para um for in, ou um in, para verificar se o item está contido em uma determinada lista, e também poderíamos acessar um item específico por meio do seu índice.
+
+# Isto porque o Python, e estes aspectos mais idiomáticos da sintaxe da linguagem, funciona bem quando utilizamos estes métodos mágicos, que possuem o double underscore (underscores duplos), com os quais passamos ao Python uma ideia de maneira mais clara.
+
+# O nome desta característica da linguagem é Duck typing, termo famoso por causa de uma fala do Alex Martelli. Este termo remete à "tipagem de pato", dando a ideia de que não precisamos necessariamente identificar uma ave para saber se trata-se de um pato ou não, basta sabermos se ela emite o mesmo som que o pato, voa ou anda como ele.
+
+# Não precisamos nos preocupar com isto, pois o próprio Python verificará se ele se comporta como tal. Então, se sabemos que ele se comporta como um iterável, não precisamos nos preocupar com a sua tipagem. Essa é uma grande vantagem da linguagem, e agora temos uma noção melhor de como estes métodos mágicos podem nos ajudar.
+
+# Percebam que ficou faltando a saída de listagem no código, uma vez que ela se tornou desnecessária. Além disso, deveríamos ter, também, uma forma de demonstrarmos o tamanho da playlist como se ela fosse um sized, uma classe que sabe informar seu tamanho.
+
+# Não temos um método size() porque o len() funciona de uma forma esperada pela linguagem Python, a qual utilizará aquilo que o objeto que está sendo passado para ele tiver. Se nosso objeto souber indicar seu próprio tamanho, ele mesmo irá conseguir resolver isso.
+
+# Por exemplo, se executarmos o código abaixo, receberemos no console que não há nenhum len() para ser executado em Playlist:
+
+# print(f'Tamanho do playlist: {len(playlist_fim_de_semana)}')
+
+# for programa in playlist_fim_de_semana:
+#     print(programa)
