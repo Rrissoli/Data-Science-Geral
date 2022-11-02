@@ -1,0 +1,351 @@
+O primeiro passo é importarmos pandas como pd com import na primeira célula da parte "Importando pandas e lendo o dataset do projeto" do notebook.
+
+import pandas as pdCOPIAR CÓDIGO
+Após executarmos as requisições com "Shift + Enter" ou clicando no ícone de "play" da célula, atribuiremos todo o dataset à variável dados. Chamaremos a biblioteca com pd seguido de read_csv() para lermos o arquivo dados.csv entre aspas simples dentro dos parênteses.
+
+dados = pd.read_csv('dados.csv')COPIAR CÓDIGO
+Com isso, o transformaremos em um DataFrame. Apenas para vermos seu tipo, escreveremos type() recebendo dados, e o retorno será pandas.core.frame.DataFrame. Poderemos apagar esta célula depois em seguida.
+
+Para visualizarmos os dados com o Colab, o qual é muito parecido com o Jupyter Notebook, bastará escrevermos dados na célula seguinte e rodarmos.
+
+Como resultado, veremos um conjunto de dados separados para o curso, contendo as colunas UF, Sexo, Idade, Cor, Anos de Estudo, Renda e Altura.
+
+O próximo passo será entendermos quando as variáveis são construídas e como as classificaremos. É importante fazermos isso, porque futuramente algumas delas que forem classificadas de determinadas formas, serão tratadas de maneiras diferentes também.
+Começaremos vendo uma maneira de salvarmos o notebook que acabamos de criar para acompanharmos as aulas.
+
+Para isso, bastará acessarmos "File > Download .ipynb" para fazermos o download do arquivo, e em seguida o salvaremos na pasta que quisermos.
+
+Logo, recomendamos salvar o projeto ao final de cada aula, para então podermos fazer seu upload e o de dados.csv, e então darmos continuidade.
+
+Já temos o dataset e DataFrame em nosso notebook. Com o método head() do Pandas, visualizaremos somente os cinco primeiros registros de dados.
+
+dados.head()COPIAR CÓDIGO
+Os tipos de dados devem ser bem entendidos, pois cada um deles possui um tipo de estatística e tratamento da informação, então é importante os identificarmos corretamente.
+
+Classificaremos os dados entre basicamente dois tipos: qualitativos e quantitativos. O primeiro expressa uma qualidade ou atributo dos dados, enquanto o segundo faz contagens e mensurações.
+
+Entenderemos a partir do nosso DataFrame; UF é bastante simples de classificarmos como qualitativo, pois não é uma contagem, e o mesmo vale para Sexo e Cor. Enquanto a Idade, Renda e Altura são quantitativos.
+
+Já Anos de Estudo é uma variável de dados qualitativos também, afinal cada código numérico representa uma classe. Veremos isso no caso de 16 ser relativo a 15 anos ou mais, e 0 como Sem instrução e menos de 1 ano por exemplo.
+
+Cada classificação pode ser dividida em duas categorias. No caso dos qualitativos, teremos os ordinais e nominais.
+
+Já os quantitativos se dividem em discretos e contínuos. Veremos exemplos de cada um mais adiante com o uso do Python e Pandas.
+
+Começando pelas variáveis qualitativas ordinais, não identificaremos as Sexo, Cor e UF como tais, pois não podemos hierarquizá-los neste caso, afinal cada código foi atribuído a cada classe sem uma ordem lógica.
+
+Já no caso de Anos de Estudo, conseguiremos fazer uma ordenação, então poderemos classificá-la desta forma. Caso queiramos visualizar o tipo deste dado por exemplo, bastará escrevermos dados[] contendo a variável entre aspas simples na parte de "1.2 Variáveis qualitativas ordinais" no notebook.
+
+dados['Anos de Estudo']COPIAR CÓDIGO
+Para vermos apenas os valores únicos, aplicaremos .unique() ao comando da célula.
+
+dados['Anos de Estudo'].unique()COPIAR CÓDIGO
+O resultado será um array() fora de ordenação. Para ordenarmos os dados, adicionaremos a building function do Python chamada sorted() que receberá todo o conteúdo desta célula.
+
+sorted(dados['Anos de Estudo'].unique())COPIAR CÓDIGO
+Com isso, visualizaremos a lista de valores do dicionário de Anos de Estudo. Logo, comprovaremos que se trata de uma variável qualitativa ordinal.
+
+Abordando as qualitativas nominais, teremos Sexo, Cor e UF. As imprimiremos na célula desta parte do notebook. Usaremos o mesmo comando executado anteriormente, alterando apenas o conteúdo de dados[] com as variáveis corretas.
+
+sorted(dados['Sexo'].unique())COPIAR CÓDIGO
+sorted(dados['Cor'].unique())COPIAR CÓDIGO
+sorted(dados['UF'].unique())COPIAR CÓDIGO
+Desta forma, veremos a numeração do código atribuída pelos profissionais do IBGE.
+
+Estes valores não podem ser hierarquizados para serem ordenados, o qua as classificam como qualitativas nominais.
+
+Mais adiante, abordaremos as variáveis quantitativas discretas. Poderemos classificar a Idade de diversas formas, dependendo de como é representada no dataset; em nosso caso, esta representa uma contagem composta por números inteiros.
+
+Quando a pesquisa é feita pelo IBGE, os entrevistadores perguntam quantos anos completos a pessoa tem, sem contar meses e dias.
+
+Na parte homônima do nosso notebook, escreveremos dados com Idade que pode ser aplicada em diversas operações, como min() por exemplo.
+
+dados.Idade.min()COPIAR CÓDIGO
+Com isso, veremos a idade mínima presente em nosso dataset. Também poderemos exibir a idade máxima com max().
+
+Faremos uma impressão com print() recebendo 'De %s até %s anos', seguido de % () contendo os dois últimos comandos anteriores.
+
+print('De %s até %s anos' % (dados.Idade.min(), dados.Idade.max()))COPIAR CÓDIGO
+Rodando este código na célula desta parte do notebook, veremos a impressão de De 13 até 99 anos. Portanto, esta variável pode ser contada e ordenada, além de ser de fato uma quantitativa discreta com os anos completos.
+
+Também poderia ser quantitativa contínua, pois é possível representarmos idades exatas que computem os meses e dias além dos anos, gerando números fracionados e reais.
+
+A variável Idade seria qualitativa ordinal se fosse inserida em intervalos, como em casos onde faixas etárias são relevantes e podem ser ordenadas por exemplo.
+
+Passando para a abordagem das variáveis quantitativas contínuas, já citamos que a Idade poderia ser deste tipo em algumas situações.
+
+Como a Renda veio da fonte do IBGE sem a contagem de centavos, criamos a variável Altura justamente para vermos um exemplo com casas decimais.
+
+Logo, esta última é classificada como quantitativa contínua. Aplicaremos o mesmo comando anterior na célula desta parte, alterando somente o nome da variável para Altura e a unidade de medida para metros dentro de print.
+
+print('De %s até %s metros' % (dados.Altura.min(), dados.Altura.max()))COPIAR CÓDIGO
+Com isso, veremos o intervalo entre o valor mínimo e o máximo da variável Altura medido em metros.
+
+Se escrevermos ['Altura'] ao invés de somente Altura para pegarmos seus dados, o resultado será igual.
+
+print('De %s até %s metros' % (dados['Altura'].min(), dados['Altura'].max()))COPIAR CÓDIGO
+Esta outra maneira de escrever é útil para os casos em que uma variável possui mais de uma palavra separada por espaço, como temos em Anos de Estudo. Logo, se quiséssemos fazer a operação com esta, escreveríamos ['Anos de Estudo'] na operação como já fizemos anteriormente.
+
+Mais adiante em nosso notebook, encontraremos um esquema gráfico que traduz de forma simples em um diagrama todos os tipos de variáveis vistos até agora, contendo as classificações e suas subdivisões citadas nesta etapa.
+
+Em resumo, teremos a variável qualitativa ordinal Anos de Estudo e as qualitativas nominais Sexo, Cor e UF, bem como a quantitativa discreta Idade e a quantitativa contínua Altura.
+
+Com isso, avançaremos para o estudo da Distribuição de Frequências; a seguir, usando a biblioteca Pandas, aprenderemos como calculá-la para determinados tipos de variáveis, pois há maneiras diversas de lidarmos com cada um.
+niciaremos o projeto deste curso de fato como estatísticos ou cientistas de dados, onde faremos a análise descritiva do conjunto de dados que já vimos.
+
+Na seção de Distribuição de Frequências do notebook Curso_de_Estatística_Parte_1.ipynb, começaremos com uma técnica de sumarização para entendermos como as variáveis se distribuem, vendo se são assimétricas ou se são distribuídas normalmente, se conseguiremos detectar outlier, ou se precisam de algum tipo de transformação por exemplo.
+
+São técnicas estatísticas que lidam com um conjunto de variáveis e buscam conhecer seus comportamentos, passando primeiro por formas gráficas chamadas histogramas que auxiliam na análise da Distribuição de Frequências nos dados.
+
+Nesta mesma parte, iniciaremos com as qualitativas que são naturalmente categorizadas, então não precisaremos nos preocupar com isso. Como vimos anteriormente, serão as Sexo, UF e Cor.
+
+Na primeira célula, chamaremos os dados[] de 'Sexo' e faremos a contagem com o método .value_counts(). Executando este comando, veremos a quantidade de ocorrências para cada categoria desta variável.
+
+dados['Sexo'].value_counts()COPIAR CÓDIGO
+O retorno da execução mostrará 53250 para a categoria 0 relativa ao sexo masculino, e 23590 para o feminino. Sabemos que isso não corresponde à realidade onde a maioria da população brasileira é composta por mulheres, porém a coleta dessas informações foi baseada em somente registros das pessoas de referência de cada domicílio, ou seja, o responsável pela casa que respondeu o questionário da pesquisa, e neste caso a maioria das respostas foi dada por homens, resultando nos valores que vimos.
+
+Outra informação importante que costuma aparecer nas tabelas de frequências é este mesmo retorno representado de forma percentual. Para fazermos isso, usaremos o mesmo método .value_counts() recebendo o parâmetro normalize sendo igual a true.
+
+Isto normalizará os dados e os colocarão na base 1. Se ainda multiplicarmos por 100, veremos a porcentagem de aproximadamente 70% de pessoas do sexo masculino e 30% do feminino que responderam ao questionário.
+
+dados['Sexo'].value_counts(normalize = True) * 100COPIAR CÓDIGO
+Para melhorarmos a apresentação dos dados, inseriremos o primeiro comando somente com .value_counts() sem parâmetro dentro de uma variável frequencia.
+
+frequencia = dados['Sexo'].value_counts()COPIAR CÓDIGO
+Feito isso, teremos uma series do Pandas. Faremos a mesma coisa com o comando que apresenta o percentual, e o colocaremos dentro da variável percentual na célula seguinte.
+
+percentual = dados['Sexo'].value_counts(normalize = True) * 100COPIAR CÓDIGO
+Para organizarmos melhor a apresentação, colocaremos tudo isso dentro de um novo DataFrame que representará a Tabela de Frequências a ser apresentada.
+
+Então, chamaremos de dist_freq_qualitativas sendo igual a pd.DataFrame() para o criarmos, onde passaremos um dicionário Python com {} contendo as duas series criadas anteriormente. A primeira coluna será a 'Frequência' como se fosse um arquivo .json, e então adicionaremos a variável frequencia após :.
+
+Após a vírgula, colocaremos a segunda coluna 'Porcentagem (%)' visto que já multiplicamos por 100, então não precisaremos formatar o número novamente. Por fim, passaremos a variável percentual após : de novo.
+
+dist_freq_qualitativas = pd.DataFrame({'Frequência': frequencia, 'Porcentagem (%)': percentual})COPIAR CÓDIGO
+Com isso, poderemos apenas escrever dist_freq_qualitativas e executar na célula seguinte para vermos a tabela com as frequências de porcentagens.
+
+Frequência	Porcentagem (%)
+0	53250	69.299844
+1	23590	30.700156
+Como vimos anteriormente, a codificação 0 e 1 da variável Sexo correspondem às respostas "masculino" e "feminino" do questionário. Então deveremos deixar bem claro o que cada código significa.
+
+Portanto, atribuiremos labels ou etiquetas. Na célula seguinte, chamaremos dist_freq_qualitativas com .rename() para renomearmos o index como um dicionário também, dizendo que 0 corresponde a 'Masculino' e 1 a 'Feminino'.
+
+dist_freq_qualitativas.rename(index = {0: 'Masculino', 1: 'Feminino'})COPIAR CÓDIGO
+Frequência	Porcentagem (%)
+Masculino	53250	69.299844
+Feminino	23590	30.700156
+Com a execução, veremos os nomes das etiquetas corretamente. Mas se apenas chamarmos o DataFrame de novo na célula seguinte, a alteração não ficará salva.
+
+Para sobrescrevermos e salvarmos as mudanças no arquivo, deveremos inserir o parâmetro inplace sendo igual a True no comando anterior.
+
+dist_freq_qualitativas.rename(index = {0: 'Masculino', 1: 'Feminino'}, inplace = True)COPIAR CÓDIGO
+Feito isso, o sistema criará e salvará o dicionário. Logo, poderemos apenas chamar a dist_freq_qualitativas e executá-la na célula para visualizarmos as etiquetas dos códigos de Sexo.
+
+Também é possível adicionarmos um título para a tabela com o DataFrame seguido de .rename_axis(), onde passaremos o nome 'Sexo' que queremos para a coluna das labels.
+
+Como podemos renomear tanto uma coluna quanto uma linha, deveremos indicar qual é o eixo axis que queremos. Neste caso, o Pandas reconhecerá 1 como coluna e 0 como linha, mas para não nos confundirmos, escreveremos 'columns' ou 'rows' que funcionam da mesma forma.
+
+Não poderemos esquecer de colocar inplace igual a True para salvarmos as alterações.
+
+dist_freq_qualitativas.rename(index = {0: 'Masculino', 1: 'Feminino'}, inplace = True)
+dist_freq_qualitativas.rename_axis('Sexo', axis = 'columns', inplace = True)COPIAR CÓDIGO
+Executaremos estes comandos e chamaremos apenas dist_freq_qualitativas na célula seguinte para visualizarmos os resultados.
+
+Sexo	Frequência	Porcentagem (%)
+Masculino	53250	69.299844
+Feminino	23590	30.700156
+Com isso, teremos uma Tabela de Frequências nomeada com clareza que poderemos copiar, colar e apresentar que será bem entendida. É interessante realizarmos os mesmos exercícios com as outras variáveis qualitativas que temos para aprimorarmos as habilidades.
+
+A seguir, veremos uma nova maneira com outro método do Pandas para fazermos esta mesma ação.
+Continuando com a construção das tabelas de Distribuição de Frequências, conheceremos o método .crosstab() de Pandas que faz o cruzamento entre variáveis, e sua documentação pode ser acessada neste link.
+
+Na primeira célula da parte "Método 2" de nosso notebook, teremos um dicionário que transformará o dado numérico em uma string, baseando-se nas variáveis do database.
+
+sexo = {0: 'Masculino',
+        1: 'Feminino'}
+
+cor = {0: 'Indígena',
+        2: 'Branca',
+        4: 'Preta',
+        6: 'Amarela',
+        8: 'Parda',
+        9: 'Sem declaração'}COPIAR CÓDIGO
+Construiremos a tabela na célula seguinte, e escreveremos que frequencia será igual a pd.crosstab() recebendo a variável Sexo nas linhas e Cor nas colunas.
+
+frequencia = pd.crosstab(dados.Sexo,
+      …
+Continuando com o assunto de Distribuição de Frequências, trabalharemos com variáveis quantitativas neste passo, as quais não são naturalmente categorizadas.
+
+O primeiro passo é gerarmos uma maneira de categorizá-las para construirmos a Distribuição, e nesta etapa aprenderemos a criar classes personalizadas.
+
+Em nosso notebook, na parte "Passo 1 - Especificar os limites de cada classe" que diz respeito ao assunto, encontraremos um exemplo bastante conhecido da categorização em classes "A", "B", "C", "D" e "E" de acordo com a renda mensal.
+
+Esta classificação se origina de um trabalho que faz a divisão em quantidade de salários mínimos que compõe o rendimento do domicílio:
+
+A: acima de 20;
+B: de 10 a 20;
+C: de 4 a 10;
+D: de 2 a 4;
+E: de zero até 2 salários mínimos.
+Como a pesquisa PNAD na qual baseamos nossos dados foi realizada em 2015, o valor do salário mínimo era de R$788,00.
+
+Com base nisso, faremos o cálculo dos valores em reais de cada classificação apresentada.
+
+A: acima de R$15.760,00;
+B: de R$7.880,00 até R$15.760,00;
+C: de R$3.152,00 até R$ 7.880,00;
+D: de R$1.576,00 até R$3.152,00;
+E: de zero até R$1.576,00.
+Primeiro, descobriremos quais são os valores mínimos e máximos da variável para construirmos a distribuição.
+
+Na célula, usaremos os dados de .Renda com .min().
+
+dados.Renda.min()COPIAR CÓDIGO
+O retorno será 0 para o valor mínimo, logicamente. Depois, aplicaremos a mesma linha com .max() para o máximo.
+
+dados.Renda.max()COPIAR CÓDIGO
+Como saída, o sistema apresentará o valor 200000 relativo ao valor máximo da variável.
+
+Estas respostas nos farão refletir se estamos recebendo valores corretos ou se é um outlier. De qualquer maneira, anotaremos esta reflexão e lidaremos com ela mais adiante no curso.
+
+Continuando, usaremos uma funcionalidade do Pandas chamada cut(), a qual precisa de alguns parâmetros que serão construídos previamente.
+
+Começaremos pelos limites das classes de renda, e os colocaremos dentro da variável classes, a qual será uma lista de Python. Já sabemos o primeiro deles, ou seja, o valor mínimo 0 descoberto com .min().
+
+O segundo limite 1576 será extraído da classe "E", o terceiro 3152 da "D", o quarto 7880 da "C", o quinto 15760 da "B" e o último 20000 relativo à classe "A" que foi retornado pelo método .max() anteriormente.
+
+classes = [0, 1576, 3152, 7880, 15760, 200000]COPIAR CÓDIGO
+Executada a célula e criada a variável classes, faremos uma visualização mais clara com labels para as categorias.
+
+Na linha seguinte, criaremos a nova variável labels recebendo uma lista Python de novo, contendo os nomes entre aspas simples. Como começamos com a classe de menor valor, iniciaremos as etiquetas de 'E' e finalizaremos com a de maior valor 'A'.
+
+labels = ['E', 'D', 'C', 'B', 'A']COPIAR CÓDIGO
+Feito isso, entenderemos como o método cut() funciona em Pandas. Em "Passo 2 - Criar a tabela de frequências" do notebook, encontraremos o link de sua documentação, caso precisemos de mais informações.
+
+Na primeira célula desta parte, escreveremos pd.cut() recebendo a variável dados.Renda que estamos trabalhando no parâmetro x. Já no segundo parâmetro bins, passaremos os limites das classes por meio de classes para que possa construí-las.
+
+Como já criamos labels e queremos exibi-las, passaremos sua variável como terceiro parâmetro também chamado labels.
+
+Por default, este método não inclui a classe inferior 0 nas classes, então precisaremos indicar ao cut() que queremos inseri-lo de fato, pois é relevante para nossa análise.
+
+Para isso, usaremos o quarto parâmetro include_lowest sendo igual a True.
+
+pd.cut(x = dados.Renda,
+       bins = classes,
+       labels = labels,
+       include_lowest = True)COPIAR CÓDIGO
+0	E
+1	E
+2	E
+3	C
+4	E
+Executando esta célula, o sistema criará uma series com um índice igual ao DataFrame onde a variável dos registros 0, 1 e 2 se encaixam na classe E, enquanto o 3 está na C por exemplo, indo até o final.
+
+Se clicarmos no botão "CODE" que aparece na própria célula que estamos escrevendo, criaremos uma nova anterior à esta.
+
+Nesta nova célula, plotaremos os dados com somente os cinco primeiros valores utilizando head(), e executaremos.
+
+dados.head()COPIAR CÓDIGO
+UF	Sexo	Idade	Cor	Anos de Estudo	Renda	Altura
+0	11	0	23	8	12	800	1.603808
+1	11	1	23	2	12	1150	1.739790
+2	11	1	35	8	15	880	1.760444
+3	11	0	46	2	6	3500	1.783158
+4	11	1	47	8	9	150	1.690631
+pd.cut(x = dados.Renda,
+       bins = classes,
+       labels = labels,
+       include_lowest = True)COPIAR CÓDIGO
+0	E
+1	E
+2	E
+3	C
+4	E
+Com estes dados, analisaremos os registros para vermos se realmente os valores de Renda correspondem à classificação.
+
+Poderemos excluir a linha de dados.head() para não nos confundirmos, acessando o menu da própria célula e clicando em "Delete cell".
+
+Continuando com esses dados, seguiremos a mesma metodologia adotada anteriormente; passaremos para o método value_counts(), mas o chamaremos de forma diferente; antes, escrevemos dados seguido da variável após o . e a função em questão para fazermos a contagem.
+
+Agora, poderemos chamá-lo por meio do próprio Pandas, escrevendo apenas pd.value_counts() recebendo todo o código de cut() que acabamos de criar.
+
+pd.value_counts(
+    pd.cut(x = dados.Renda,
+               bins = classes,
+               labels = labels,
+               include_lowest = True)
+)COPIAR CÓDIGO
+E	49755
+D	16700
+C	7599
+B	2178
+A	608
+Name: Renda, dtype: int64COPIAR CÓDIGO
+Nesta execução, veremos a contagem feita da maneira como queríamos.
+
+Este comando é o mesmo que fizemos anteriormente com frequencia. Logo, poderemos chamar esta variável para apresentarmos os mesmos resultados.
+
+frequencia = pd.value_counts(
+    pd.cut(x = dados.Renda,
+               bins = classes,
+               labels = labels,
+               include_lowest = True)
+)
+frequenciaCOPIAR CÓDIGO
+E	49755
+D	16700
+C	7599
+B	2178
+A	608
+Name: Renda, dtype: int64COPIAR CÓDIGO
+Na célula seguinte, faremos a coluna de percentual. Para isso, passaremos o parâmetro normalize sendo igual a True dentro de value_counts(), como já vimos.
+
+percentual = pd.value_counts(
+    pd.cut(x = dados.Renda,
+               bins = classes,
+               labels = labels,
+               include_lowest = True),
+    normalize = True
+)
+percentualCOPIAR CÓDIGO
+E	0.647514
+D	0.217335
+C	0.098894
+B	0.028345
+A	0.007913
+Name: Renda, dtype: float64COPIAR CÓDIGO
+Por fim, aplicaremos a mesma técnica feita com dist_freq_qualitativas. Inclusive, poderemos copiar e colar esta linha feita anteriormente, para então alterarmos o que for necessário.
+
+Logo, criaremos a nova variável dist_freq_quantitativas_personalizadas sendo igual a pd.DataFrame() recebendo a frequencia e o percentual da mesma maneira.
+
+Em seguida, mostraremos o nosso resultado chamando a variável e executando a célula.
+
+dist_freq_quantitativas_personalizadas = pd.DataFrame(
+    {'Frequência': frequencia, 'Porcentagem (%)': percentual}
+)
+dist_freq_quantitativas_personalizadasCOPIAR CÓDIGO
+Frequência	Porcentagem (%)
+E	49755	0.647514
+D	16700	0.217335
+C	7599	0.028345
+B	2178	0.028345
+A	608	0.007913
+Porém, a ordenação está sendo feita de E até A, e queremos seguir a ordem alfabética de A até E.
+
+Então chamaremos a dist_freq_quantitativas_personalizadas com .sort_index() para ordenarmos o índice como ascending igual a False, pois não queremos o default.
+
+dist_freq_quantitativas_personalizadas.sort_index(ascending = False)COPIAR CÓDIGO
+Frequência	Porcentagem (%)
+A	608	0.007913
+B	2178	0.028345
+C	7599	0.028345
+D	16700	0.217335
+E	49755	0.647514
+Será esta construção da Distribuição de Frequências que analisaremos mais adiante para tirarmos as conclusões.
+
+Observando os dados, é possível visualizarmos a grande desigualdade social e precária distribuição de renda exposta pela pesquisa, visto que a grande maioria das pessoas pertence à classe "E" com menor rendimento e maior pobreza, enquanto as maiores rendas estão concentradas em uma porcentagem muito pequena de domicílios que corresponde à classe "A".
+
+Também veremos estes resultados em forma de gráfico para podermos abordar a simetria.
+
+A seguir, continuaremos com este assunto, mas aprenderemos uma outra maneira de criarmos a categorização de variáveis quantitativas.
