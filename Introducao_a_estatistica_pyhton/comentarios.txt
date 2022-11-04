@@ -349,3 +349,739 @@ Observando os dados, é possível visualizarmos a grande desigualdade social e p
 Também veremos estes resultados em forma de gráfico para podermos abordar a simetria.
 
 A seguir, continuaremos com este assunto, mas aprenderemos uma outra maneira de criarmos a categorização de variáveis quantitativas.
+Já aprendemos a criar Tabelas de Distribuições de Frequências, e aprenderemos a representá-las graficamente através de Histogramas.
+
+Para isso, na parte "2.4 Histograma" de nosso notebook, encontraremos o link da documentação da biblioteca Seaborn que usaremos neste passo. Então importaremos seaborn como sns na primeira célula, seu "apelido" padrão.
+
+import seaborn as snsCOPIAR CÓDIGO
+Esta é uma library especializada em visualização de dados estatísticos e baseada em matplotlib().
+
+Veremos apenas como criar o Histograma e o boxplot. Não nos aprofundaremos mais sobre este recurso agora, mas caso haja interesse, há outros cursos aqui da Plataforma Alura que o exploram mais a fundo e valem a pena conferir.
+
+Na célula seguinte, usaremos ax como nome da variável para gerarmos o objeto gráfico do Seaborn, atribuindo-o à esta. Na documentação, encontraremos bastante este tipo de nomenclatura, o que facilitará o entendimento deste exercício.
+
+Será igual a sns com a função .distplot() para criarmos um Histograma. Dentro, passaremos dados.Altura que queremos plotar como primeiro exemplo.
+
+Inicialmente, suprimiremos a função de densidade kde traçada junto com o Histograma, colocando-o como False.
+
+ax = sns.distplot(dados.Altura, kde = False)COPIAR CÓDIGO
+Criada a variável, começaremos a configurar alguns parâmetros em ax na mesma célula. Aplicaremos .figure com .set_size_inches() para configurarmos o tamanho do gráfico com 12 polegadas de largura e 6 de altura que queremos visualizar no notebook.
+
+Em seguida, setaremos o título 'Distribuição de Frequências - Altura' e o fontsize como 18 dentro de set_title().
+
+Em seguida, configuraremos o label do eixo x como 'Metros' e o tamanho de fonte 14 dentro do método .set_xlabel().
+
+Por fim, chamaremos ax para mostrarmos o gráfico de fato.
+
+ax = sns.distplot(dados.Altura, kde = False)
+
+ax.figure.set_size_inches(12, 6)
+ax.set_title('Distribuição de Frequências - Altura', fontsize=18)
+ax.set_xlabel('Metros', fontsize=14)
+axCOPIAR CÓDIGO
+Histograma composto por um gráfico de barras unidas, com um pico central por volta de "17" no eixo X intitulado "Metros", o qual ultrapassa o valor de "50000" no eixo Y. Não possui valores muito expressivos de "0" a "15" e de "19" até "20"
+
+Como resultado, veremos um Histograma composto por barras unidas cuja área é proporcional à frequência da classe, o qual possui seu pico por volta do valor "17" do eixo X.
+
+Na célula seguinte, faremos os mesmos comandos com o título principal diferente, sendo 'Distribuição de Frequências - Altura - KDE', e do set_xlabel() como 'Metros mesmo.
+
+Como o padrão de kde é igual a True, retiraremos este parâmetro para vermos a função de densidade no Histograma.
+
+ax = sns.distplot(dados.Altura)
+
+ax.figure.set_size_inches(12, 6)
+ax.set_title('Distribuição de Frequências - Altura - KDE', fontsize=18)
+ax.set_xlabel('Metros', fontsize=14)
+axCOPIAR CÓDIGO
+Mesmo Histograma mostrado na execução anterior, porém com a linha KDE representando a função de densidade, a qual percorre todo o limite das barras do gráfico
+
+Com isso, poderemos fazer comparações diversas.
+
+Como este último Histograma foi gerado a partir de uma Distribuição normal, possui uma forma bastante simétrica com um expressivo pico central.
+
+Poderemos fazer a mesma coisa utilizando somente a biblioteca Pandas e não a Seaborn, mas teremos menos recursos.
+
+Na célula seguinte, escreveremos dados.Altura seguido de .hist() para traçarmos um Histograma mais simples com apenas dez barras por default.
+
+Como queremos que tenha mais barras e seja mais parecido com o anterior, ou seja, com maior número de classes, definiremos bins como 50 no primeiro parâmetro por exemplo. Também poderemos configurar o tamanho do figsize como (12, 6) no segundo parâmetro.
+
+dados.Altura.hist(bins = 50, figsize=(12,6))COPIAR CÓDIGO
+Histograma com gráfico de 50 barras unidas, com valores inexpressivos anteriores a "14" e posteriores a "20" do eixo X, contendo um pico no valor "17" aproximadamente que ultrapassa os "50000" no eixo Y, sendo então bastante parecido com os anteriores
+
+Aparentemente, realizamos uma visualização bem parecida com as anteriores. Porém, esta forma com o Pandas possui bem menos recursos, o que é evidente ao entrarmos na documentação da Seaborn.
+
+Em uma nova célula seguinte, faremos uma representação gráfica da variável dist_freq_quantitativas_personalizadas. Começaremos apenas chamando-a para vermos sua Tabela de Frequências personalizada.
+
+dist_freq_quantitativas_personalizadasCOPIAR CÓDIGO
+Frequência	Porcentagem (%)
+E	49755	0.647514
+D	16700	0.217335
+C	7599	0.028345
+B	2178	0.028345
+A	608	0.007913
+Porém, não conseguiremos fazer isso com os mesmos recursos já usados. Logo, para obtermos um resultado mais parecido com os Histogramas, criaremos um gráfico de barras passando 'Frequência' para dist_freq_quantitativas_personalizadas[].
+
+Poderíamos fazer com 'Porcentagem (%)' também que o tamanho e a distribuição ficariam os mesmos.
+
+Aplicaremos .plot com .bar() para plotarmos um gráfico de barras. Para que fiquem unidas como nos Histogramas, passaremos o parâmetro width para a largura 1 apenas. Se quisermos, em seguida poderemos configurar a cor com color sendo igual a azul 'blue' por exemplo.
+
+Para ficarmos mais próximos do formato anterior, passaremos alpha para obtermos uma certa transparência com o valor 0.2. Por fim, o figsize será o mesmo utilizado antes.
+
+dist_freq_quantitativas_personalizadas['Frequência'].plot.bar(width= 1, color= 'blue', alpha = 0.2, figsize= (12, 6))COPIAR CÓDIGO
+Gráfico de barras da variável, com seu pico inicial na classe "E" chegando ao valor "50000", que descende de forma relativamente brusca até a classe "A" com os menores valores mais próximos de zero
+
+Com isso, geraremos a representação gráfica da variável dist_freq_quantitativas_personalizadas a partir de os resultados de sua Tabela de Distribuição de Frequências contendo as configurações que aplicamos.
+
+Caso não a tenhamos criado anteriormente, conseguiremos visualizar um gráfico de barras por meio dos métodos hist() e plot.bar() que geram as classes.
+
+Na próxima etapa, entraremos na nova seção "3. Medidas de Tendência Central".
+[20:04, 03/11/2022] ${Raphael_Rissoli}: Começaremos o novo tópico de Medidas de Tendência Central.
+
+Neste grupo de assuntos, falaremos sobre a média aritmética, mediana e média. Ao final, abordaremos a relação entre essas medidas.
+
+Faremos um DataFrame dentro da variável df que nos ajudará no entendimento desses cálculos. Em seguida, o aplicaremos em nosso dataset maior.
+
+Este será relativo às notas de três alunos fictícios em sete matérias escolares diferentes.
+
+df = pd.DataFrame(data = {'Fulano': [8, 10, 4, 8, 6, 10, 8],
+                          'Beltrano': [10, 2, 0.5, 1, 3, 9.5, 10],
+                          'Sicrano': [7.5, 8, 7, 8, 8, 8.5, 7]},
+                 index = ['Matemática',
+                          'Português',
+                          'Inglês',
+                          'Geografia',
+                          'História',
+                          'Física',
+                          'Química'])
+df.rename_axis('Matérias', axis = 'columns', inplace = True)
+dfCOPIAR CÓDIGO
+Matérias	Beltrano	Fulano	Sicrano
+Matemática	10.0	8	7.5
+Português	2.0	10	8.0
+Inglês	0.5	4	7.0
+Geografia	1.0	8	8.0
+História	3.0	6	8.0
+Física	9.5	10	8.5
+Química	10.0	8	7.0
+Nas etapas anteriores, fizemos uma sumarização dos dados, reduzindo-os para tentarmos entender um conjunto que é bastante grande, como em nosso caso onde temos mais de 70 mil registros ou observações.
+
+Tentaremos sumarizar ainda mais por meio de uma medida que pegará uma informação importante do conjunto.
+
+Começaremos falando sobre a média aritmética; é basicamente o centro de massa da distribuição de uma variável, equilibrando-a. Por ser muito sensível aos extremos, às vezes esta medida não é a mais indicada para representar algumas variáveis, justamente por conta desta sensibilidade.
+
+fórmula da média aritmética: mi é igual ao somatório de X índice i, i variando de 1 a n, divido por n
+
+Em nossa variável Renda por exemplo, vimos que a grande maioria das pessoas recebe um baixo rendimento mensal e poucas possuem altas rendas, afinal a desigualdade social é bastante expressiva no Brasil. Logo, a média não é capaz de representar este conjunto de dados corretamente.
+
+De volta ao DataFrame deste passo, calcularemos manualmente somente a média neste primeiro momento, e depois lidaremos com as demais medidas de outra forma.
+
+Na primeira célula da parte "3.1 Média aritmética", copiaremos as notas de Fulano e as colaremos dentro de parênteses para aplicarmos a fórmula. Somaremos todos os valores e dividiremos pela quantidade de matérias existentes.
+
+Logo, trocaremos as vírgulas pelo símbolo de + para realizarmos a somatória e dividiremos o resultado por 7.
+
+(8 + 10 + 4 + 8 + 6 + 10 + 8) / 7COPIAR CÓDIGO
+Como retorno, veremos a média 7.714285714285714 exibida na saída.
+
+Porém, não poderemos calcular assim todas as vezes, pois em nosso dataset existem mais de 70 mil registros por exemplo, o que tornaria a operação inviável desta forma.
+
+Começaremos com a variável df[] com 'Fulano', pois a biblioteca Pandas disponibiliza uma função .mean() para calcular a média.
+
+df['Fulano'].mean()COPIAR CÓDIGO
+O retorno será o mesmo valor apresentado antes, porém fizemos a mesma operação de maneira mais simples.
+
+De volta ao nosso dataset oficial, calcularemos da mesma forma para descobrirmos a média da Renda.
+
+dados.Renda.mean()COPIAR CÓDIGO
+Com a saída do valor 2000.3831988547631, veremos que a média dos rendimentos dentro da pesquisa é de aproximadamente R$2.000,00.
+
+Mais adiante neste curso, veremos as influências dos extremos neste cálculo para a coerência da análise.
+
+Em uma nova célula, veremos novamente só os cinco primeiros registros de nosso dataset.
+
+dados.head()COPIAR CÓDIGO
+UF	Sexo	Idade	Cor	Anos de Estudo	Renda	Altura
+0	11	0	23	8	12	800	1.603808
+1	11	1	23	2	12	1150	1.739790
+2	11	1	35	8	15	880	1.760444
+3	11	0	46	2	6	3500	1.783158
+4	11	1	47	8	9	150	1.690631
+No começo do curso, abordamos os tipos de variáveis e vimos que alguns deles não permitem o cálculo da média por motivos óbvios, como no caso das qualitativas nominais Sexo, Cor e UF.
+
+Poderemos usar estas variáveis para nos auxiliar nas análises como filtros ou by, como a renda média por cada sexo por exemplo.
+
+Apagaremos a linha de head() e chamaremos nossos dados novamente. Em seguida, aplicaremos a funcionalidade .groupby() do Pandas para agruparmos o resultado dentro da variável 'Sexo', e calcularemos a média com .mean().
+
+dados.groupby(['Sexo']).mean()COPIAR CÓDIGO
+Sexo	UF	Idade	Cor	Anos de Estudo	Renda	Altura
+0	31.901991	44.046554	5.038685	9.120169	2192.441596	1.603808
+1	31.937728	44.127554	5.018906	10.258584	1566.847393	1.699670
+Com esta execução, o sistema calculará a média de todas as variáveis do dataset para cada sexo, incluindo aquelas que não poderiam ser calculadas.
+
+Portanto, escolheremos quais queremos calcular. Antes de .mean(), pediremos somente a 'Renda'.
+
+dados.groupby(['Sexo'])['Renda'].mean()COPIAR CÓDIGO
+Sexo	
+0	2192.441596
+1	1566.847393
+Com isso, conseguiremos entender melhor o funcionamento da média aritmética e como aplicá-la.
+
+A seguir, partiremos para a mediana.
+[20:20, 03/11/2022] ${Raphael_Rissoli}: Continuando com as Medidas de Tendência Central, abordaremos a mediana.
+
+Esta medida consiste no valor que divide a nossa série exatamente ao meio. Por exemplo, se tivermos as idades de dez pessoas, primeiro deveremos organizar de forma crescente para depois pegarmos o valor que divide o grupo na metade, ou seja, entre cinco mais novos e os cinco mais velhos.
+
+Na parte "3.2 Mediana" de nosso notebook, teremos um roteiro de como obter a mediana com fórmulas específicas.
+
+O primeiro passo é ordenar o conjunto de dados. Depois, identificaremos o número n de observações ou registros deste conjunto. Quando formos separar as metades, o fato de o valor ser par ou ímpar interferirá no resultado.
+
+Quando "n" for ímpar, a posição do elemento mediano será obtido com:
+
+"ElementoMd" igual a somatória de "n" mais "1" dividido por "2"
+
+Quando "n" for par, será com:
+
+"ElementoMd" igual a "n" dividido por "2"
+
+Faremos somente o passo-a-passo do ímpar agora, mas recomendamos calcular com o "n" par como exercício extra, caso queira. Mais adiante, veremos apenas a resolução desta última.
+
+Em nosso primeiro exemplo, teremos uma série desordenada com cinco valores: [ 6, 4, 3, 9, 1]. Quando organizarmos de forma crescente, obteremos [ 1, 3, 4, 6, 9 ].
+
+Como a quantidade de registros no conjunto é ímpar, aplicaremos sua fórmula correta. O "n" é este número "5" de observações somado com "1", resultando em "6". Por fim, dividiremos por "2" e obteremos o resultado "3".
+
+Este valor significará a terceira posição do conjunto, a qual é relativa ao elemento mediano, ou seja, o 4 será a medida mediana "Md" deste exercício.
+
+Entenderemos esse cálculo na prática com nosso dataset df com o boletim de notas criado anteriormente como exemplo.
+
+Na primeira célula desta parte do nosso notebook, criaremos a variável notas_fulano para o primeiro aluno. Esta será igual a df.Fulano e, em seguida, exibiremos as notas de notas_fulano.
+
+notas_fulano = df.Fulano
+notas_fulanoCOPIAR CÓDIGO
+Matemática	8
+Português	10
+Inglês	4
+Geografia	8
+História	6
+Física	10
+Química	8
+Na célula seguinte, notas_fulano será igual a notas_fulano com o método Pandas .sort_value() que organizará os valores de maneira crescente.
+
+notas_fulano = notas_fulano.sort_values()
+notas_fulanoCOPIAR CÓDIGO
+Inglês	4
+História	6
+Matemática	8
+Geografia	8
+Química	8
+Português	10
+Física	10
+Isso não precisará ser feito todas as vezes que quisermos calcular a mediana, mas é importante fazermos este passo-a-passo para a operação ficar bem clara.
+
+Logo, para entendermos bem a posição mediana, escreveremos notas_fulano com um outro método Pandas chamado .reset_index() que retirará o índice anterior organizado pelos nomes das matérias da series, e o transformará em uma variável index do DataFrame.
+
+notas_fulano = notas_fulano.reset_index()
+notas_fulanoCOPIAR CÓDIGO
+index	Fulano
+0	Inglês	4
+1	História	6
+2	Matemática	8
+3	Geografia	8
+4	Química	8
+5	Português	10
+6	Física	10
+Com este novo índice numérico de 0 a 6, veremos com clareza a posição 3 do elemento mediano Geografia com nota de Fulano 8, pois temos sete registros neste exemplo, e "7" é um número ímpar.
+
+Para confirmarmos na prática, aplicaremos a fórmula na célula seguinte; escreveremos n sendo igual a notas-fulano com .shape[] recebendo 0. Em seguida, exibiremos apenas n para obtermos o resultado.
+
+n = notas_fulano.shape[0]
+nCOPIAR CÓDIGO
+O resultado da operação será 7, correspondendo à quantidade de sete observações no conjunto de dados.
+
+Na célula seguinte, obteremos elemento_md sendo igual a (n + 1) dividido por 2. Depois, exibiremos elemento_md.
+
+elemento_md = (n + 1) / 2
+elemento_mdCOPIAR CÓDIGO
+O elemento mediano apresentado está na posição 4.0. De acordo com a tabela com index, corresponde à Geografia identificada pelo número 3.
+
+Como se trata de um conjunto de dados bastante pequeno, este cálculo está bem simples. Mas em muitas situações, teremos uma grande tabela para lidarmos, como no caso de nosso dataset principal do curso.
+
+É importante nos atentarmos às diferenças de cálculo entre quantidades pares e ímpares, conforme as fórmulas apresentadas.
+
+Continuando, escreveremos notas_fulano na célula seguinte, e aplicaremos o loc[] que selecionará um item dentro do DataFrame ou series.
+
+Dentro, passaremos o elemento mediano elemento_md com -1 para encontrá-lo. É importante não esquecermos desta subtração.
+
+notas_fulano.loc[elemento_md - 1]COPIAR CÓDIGO
+O resultado do index será Geografia com a nota 8 de Fulano, cuja identificação é 3.
+
+Para calcularmos o mesmo valor utilizando a biblioteca Pandas para não precisarmos fazer tantas contas, chamaremos apenas notas_fulano com o método .median().
+
+notas_fulano.median()COPIAR CÓDIGO
+O retorno exibirá a mediana correspondente à nota 8.0 de Fulano.
+
+Seguindo no notebook, encontraremos o "Exemplo 2" relativo à quantidade par de registros. Para auxiliar no experimento, pegaremos as notas de Beltrano por meio da notas_beltrano, contendo uma amostra aleatória de apenas 6 registros por meio de sample().
+
+O parâmetro random_state é um gerador de número aleatório. Repetindo o valor 101 apresentado aqui, será possível obter exatamente a mesma seleção deste experimento.
+
+notas_beltrano = df.Beltrano.sample(6, random_state = 101)
+notas_beltranoCOPIAR CÓDIGO
+Matemática	8
+Inglês	4
+Física	10
+História	6
+Química	8
+Português	10
+Realizando toda a operação necessária para encontrar a mediana, obteremos o valor 6.25 de notas_beltrano ao final do exercício com n sendo um número par.
+
+notas_beltrano.median()COPIAR CÓDIGO
+Para realizarmos a análise descritiva dos dados de nosso projeto, iremos para a parte "Obtendo a mediana em nosso dataset".
+
+Na primeira célula, começaremos pela Renda. Recomendamos que também faça com as demais variáveis como exercício.
+
+dados.Renda.median()COPIAR CÓDIGO
+O resultado da operação será 1200.0.
+
+Há uma outra maneira de obtermos o resultado que será melhor abordada adiante nas Medidas Separatrizes; com o método quantile() vazio, teremos o mesmo valor de resultado.
+
+Isso acontece porque seu default é q=0.5, o que significa que partiremos o conjunto exatamente na metade para pegarmos a mediana da mesma forma. Poderemos acessar essa informação e outras no "Help" deste método, escrevendo apenas ? no lugar dos parênteses do método e executando a célula.
+
+dados.Renda.quantile?COPIAR CÓDIGO
+Portanto, também é possível obtermos a mediana com quantile(), bem como outros valores que serão vistos mais adiante em Medidas Separatrizes.
+[20:37, 03/11/2022] ${Raphael_Rissoli}: Neste passo, falaremos sobre a medida moda.
+
+Esta é a mais fácil de definir entre as demais Medidas de Tendência Central, pois é justamente o valor mais frequente dentro de um conjunto de dados.
+
+Na primeira célula da parte "3.3 Moda" de nosso notebook, teremos o mesmo df com as notas de três alunos em sete matérias.
+
+dfCOPIAR CÓDIGO
+Matérias	Beltrano	Fulano	Sicrano
+Matemática	10.0	8	7.5
+Português	2.0	10	8.0
+Inglês	0.5	4	7.0
+Geografia	1.0	8	8.0
+História	3.0	6	8.0
+Física	9.5	10	8.5
+Química	10.0	8	7.0
+Observando somente as notas de Beltrano, é evidente que a moda com o valor que mais aparece é a "10.0", pois temos um pequeno conjunto de dados. Já para fulano, a nota modal é "8".
+
+É possível termos mais de uma moda dentro em um dataset; por exemplo, se houver apenas duas, chamaremos a variável como bimodal. Caso tenhamos mais, será multimodal.
+
+Na célula seguinte, obteremos a medida com o método .mode() da biblioteca Pandas.
+
+df.mode()COPIAR CÓDIGO
+Matérias	Beltrano	Fulano	Sicrano
+0	10.0	8	8.0
+No retorno, veremos um Dataframe com os valores modais.
+
+Para termos um exemplo de variáveis multimodais, criaremos a exemplo sendo igual a uma nova pd.Series() contendo uma lista de valores.
+
+exemplo = pd.Series([1, 2, 2, 3, 4, 4, 5, 6, 6])COPIAR CÓDIGO
+Com isso, veremos a mesma quantidade de ocorrências dos valores 2, 4 e 6. Chamando somente exemplo na sequência, veremos o seguinte resultado:
+
+0   1
+1   2
+2   2
+3   3
+4   4
+5   4
+6   5
+7   6
+8   6
+
+dtype: int64COPIAR CÓDIGO
+Obtendo este índice com os valores, aplicaremos exemplo com .mode().
+
+exemplo.mode()COPIAR CÓDIGO
+0   2
+1   4
+2   6
+
+dtype: int64COPIAR CÓDIGO
+O resultado será uma series com os três valores modais 2, 4 e 6, provando que a variável é multimodal de fato. Se alterássemos o último valor para 7, o resultado seria apenas 2 e 4 e a variável apenas bimodal.
+
+Portanto, esta medida apresenta os valores que são mais frequentes em um conjunto de dados.
+
+Este tipo de Estatística Descritiva é bastante utilizada com variáveis qualitativas que possuem valores categóricos, pois as contínuas podem ter inúmeras modas por exemplo.
+
+Em "Obtendo a moda em nosso dataset", escreveremos dados com a variável Renda seguida de mode() apenas para avaliarmos o retorno.
+
+dados.Renda.mode()COPIAR CÓDIGO
+Como resultado, veremos o valor 788 que corresponde ao salário mínimo no ano de 2015 quando a PNAD foi realizada. Como já vimos, a grande maioria das pessoas possuem baixa renda por conta da grande desigualdade social, logo faz sentido que este número ocorra com mais frequência.
+
+Na célula seguinte, pegaremos a moda da variável Altura que resultará na seguinte saída:
+
+0   1.568128
+1   1.671225
+2   1.681659
+3   1.692977
+4   1.708163
+5   1.708370
+6   1.753842
+7   1.779073
+8   1.796462
+
+dtype: float64COPIAR CÓDIGO
+Logo, veremos que este elemento é multimodal e possui nove modas no conjunto de valores. Também veremos que esta medida para um valor contínuo não significa muito para nossa análise.
+
+A seguir, entenderemos as relações entre as três estatísticas descritivas média, mediana e moda quando conseguirmos identificar simetrias e potenciais problemas em nossa distribuição.
+[21:03, 03/11/2022] ${Raphael_Rissoli}: Anteriormente, abordamos os cálculos das três Medidas de Tendência Central: média, mediana e moda. Neste passo, falaremos sobre a relação entre elas, o que nos ajudará a entendermos melhor o comportamento da distribuição dos dados.
+
+Por exemplo, poderemos descobrir se será necessário fazer uma transformação nos dados, se a variável é simétrica ou não, e caso seja assimétrica, se é à esquerda ou à direita e etc.
+
+Em nosso notebook, encontraremos a parte "3.4 Relação entre média, mediana e moda" com uma representação gráfica dos formatos padrões mais comuns de variáveis.
+
+Primeiro gráfico de assimetria à direita, com um pico em "moda", e com uma linha descendente que passa por "mediana", e depois por "média" já próximo ao eixo "x". Segundo gráfico de variável simétrica contendo um pico central indicado pelas três medidas no mesmo ápice. Terceiro gráfico com linha ascendente, começando com a "média" próxima ao eixo "x", passando por "mediana" até o topo da curva com a marcação "moda".
+
+A variável com Simetria é um padrão mais difícil de se encontrar, mas é o mais desejado, onde são iguais ou muito próximas e possuem uma distribuição simétrica.
+
+A Assimetria à Direita acontece quando há uma grande quantidade de valores que se afunilam de alguma forma, como no caso da pesquisa PNAD sobre a renda mensal, onde a maioria das pessoas é mais pobre justificando o pico em "moda", enquanto a minoria possui grandes rendimentos que diminuem o valor da média.
+
+Basicamente a mesma coisa acontece na Assimetria à Esquerda, mas a "força" que "puxa" os dados está na direção contrária.
+
+Com essas representações gráficas, veremos com clareza onde cada estatística descritiva está posicionada.
+
+Nas células seguintes, faremos análises com nossos próprios dados por meio de gráficos. Em uma variável ax, aplicaremos o método .distplot() do Seaborn contendo a .Renda a partir de dados.
+
+Em seguida, setaremos seu tamanho com .figure e .set_size_inches() como 12 e 6 polegadas.
+
+Com isso, geraremos um gráfico chamando ax ao final.
+
+ax = sns.distplot(dados.Renda)
+ax.figure.set_size_inches(12, 6)
+axCOPIAR CÓDIGO
+Como resultado, teremos um gráfico com Assimetria à direita, conforme já citamos.
+
+Faremos uma modificação para representarmos melhor, pois a desigualdade é tão grande que a leitura do comportamento do gráfico fica um pouco prejudicada.
+
+Cortaremos os dados adicionando .query() após dados para selecionarmos as rendas menores que 20000. Veremos essa questão novamente em atividades ao final do curso.
+
+ax = sns.distplot(dados.query('Renda < 20000').Renda)
+ax.figure.set_size_inches(12, 6)
+axCOPIAR CÓDIGO
+gráfico da variável renda com um pico bastante expressivo em torno do valor da moda "788" do eixo "x", atingindo o número "0.008" no eixo "y". A linha decresce bruscamente conforme os valores do eixo "x" aumentam
+
+Como resultado, teremos um gráfico com uma Simetria à Direita bastante brusca.
+
+Verificaremos as estatísticas para vermos se o comportamento das medidas realmente correspondem ao gráfico.
+
+Na célula seguinte, criaremos a variável Moda sendo igual a dados.Renda.mode()[0], e depois a chamaremos.
+
+Moda = dados.Renda.mode()[0]
+ModaCOPIAR CÓDIGO
+O resultado da moda será 788, como já vimos.
+
+Calcularemos a Mediana com median() e a Media com mean() nas células seguintes.
+
+Mediana = dados.Renda.median()
+MedianaCOPIAR CÓDIGO
+Media = dados.Renda.mean()
+MediaCOPIAR CÓDIGO
+Os retornos serão 1200.0 e 2000.3831988547631 para cada cálculo, correspondendo à mediana e à média respectivamente.
+
+Para confirmarmos se a moda é menor do que a mediana que é menor que a média, escreveremos Moda < Mediana < Media na célula seguinte.
+
+Se retornarmos True, significará que confirmamos os comportamentos como uma variável simétrica à direita.
+
+Continuando, iremos para a parte de avaliação da variável Altura. Construiremos seu gráfico da mesma maneira feita com a anterior.
+
+ax = sns.distplot(dados.Altura)
+ax.figure.set_size_inches(12, 6)
+axCOPIAR CÓDIGO
+gráfico da variável "Altura", contendo um pico central em torno do valor "17" do eixo "x"
+
+Em seguida, faremos os cálculos das três medidas estatísticas para vermos se realmente se trata de Simetria.
+
+Moda = dados.Altura.mode()
+ModaCOPIAR CÓDIGO
+Mediana = dados.Altura.median()
+MedianaCOPIAR CÓDIGO
+Media = dados.Altura.mean()
+MediaCOPIAR CÓDIGO
+O primeiro resultado representará sua característica multimodal, como já vimos anteriormente. Essa é uma característica bastante forte de variáveis contínuas.
+
+O segundo será 1.6993247325 e o terceiro 16995124540575814. Com isso, veremos que estas duas últimas medidas são bem próximas.
+
+Observando a moda, seus resultados também estarão bem próximos aos dois seguintes. Portanto, poderemos considerar que se trata de Simetria.
+
+Em seguida, aplicaremos os mesmos cálculos para Anos de Estudo com bins sendo igual a 17.
+
+ax = sns.distplot(dados['Anos de Estudo'], bins = 17)
+ax.figure.set_size_inches(12, 6)
+axCOPIAR CÓDIGO
+Gráfico com vales e picos variados, sendo o mais expressivo em "12" do eixo "x" e outro menor logo após "15".
+
+O resultado apresentará um gráfico bastante irregular com picos e vales bastante acentuados, e poderemos interpretar de várias formas.
+
+Se considerarmos somente os picos, encontraremos um comportamento bastante parecido com o padrão de Assimetria à Esquerda, pois os maiores picos aparecem conforme os valores do eixo "x" sobem.
+
+Em seguida, faremos os cálculos da moda, mediana e média desta variável.
+
+Moda = dados['Anos de Estudo'].mode()
+ModaCOPIAR CÓDIGO
+Mediana = dados['Anos de Estudo'].median()
+MedianaCOPIAR CÓDIGO
+Media = dados['Anos de Estudo'].mean()
+MediaCOPIAR CÓDIGO
+O resultado da moda será 12, a mediana será 11.0 e a média 9.469664237376367. Comprovaremos novamente ao recebermos True para Moda > Mediana > Media.
+
+Com isso, entenderemos melhor os comportamentos das variáveis e seus gráficos, o que será essencial para nossas análises.
+
+A seguir, abordaremos as Medidas Separatrizes.
+[21:06, 03/11/2022] ${Raphael_Rissoli}: Nesta etapa, abordaremos as Medidas Separatrizes.
+
+Anteriormente, mencionamos este assunto quando falamos sobre a mediana que divide uma variável em duas partes iguais.
+
+A partir de agora, aprenderemos sobre as seguintes medidas:
+
+Quartis: divide a variável em quatro partes iguais quanto ao número de elementos de cada uma;
+
+Decis: divide em dez partes iguais;
+
+Percentis: divide em cem partes iguais.
+
+Estas medidas são interessantes porque não são influenciadas por valores extremos de uma distribuição, diferente da média em relação à Renda, como já citamos. Neste nosso caso, a medida separatriz mediana representa melhor a tendência central da distribuição desses dados.
+
+Estes cálculos permitem análises importantes a partir de um ponto de referência, como o salário mínimo por exemplo. Também poderemos construir classificações com essas medidas, como as classes "A", "B", "C", "D" e "E".
+
+Na parte "4.1 Quartis, decis e percentis" dentro da nova seção, aprenderemos como obter esses resultados.
+
+Quando queremos dividir uma série em "n" partes, precisaremos de "n -1" divisores. No caso da mediana por exemplo, precisaremos de somente um divisor para separarmos duas metades.
+
+O mesmo acontecerá com as demais medidas quartis, decis e percentis. Na primeira célula, pegaremos os dados da Renda e aplicaremos o já conhecido quantile().
+
+dados.Renda.quantile()COPIAR CÓDIGO
+Executando este método mesmo sem o parâmetro com valor padrão q = 0.5, obteremos o mesmo resultado 1200.0 da mediana.
+
+Também poderemos passar uma lista com as divisões da medida; por exemplo, se queremos calcular os quartis, precisaremos de três valores; o primeiro dividirá os dados entre os 25% abaixo do quartil e os 75% acima.
+
+Dentro de quantile(), passaremos 0.25 dentro dos colchetes como primeiro divisor. O seguinte é justamente a mediana que divide a variável ao meio, então passaremos 0.5.
+
+Por fim, o terceiro quartil será o contrário do primeiro, sendo os 75% primeiros valores abaixo, e os 25% acima. portanto, passaremos 0.75 como último parâmetro.
+
+dados.Renda.quantile([0.25, 0.5, 0.75])COPIAR CÓDIGO
+0.25    788.0
+0.50   1200.0
+0.75   2000.0
+Name: Renda, dtype: float64COPIAR CÓDIGO
+Rodando o código, veremos os valores que dividem cada quartil.
+
+Aprenderemos a realizar a mesma operação para as medidas decis e percentis; aplicaremos a técnica de List comprehension, ou seja, a construção de uma lista com for em Python.
+
+Entre colchetes, passaremos i para representarmos a variável. Em seguida, escreveremos o for e diremos que este i varia em um intervalo range() de 1 até 10.
+
+[i for i in range(1, 10)]COPIAR CÓDIGO
+O resultado será uma lista de 1 até 9, pois para dividir em 10 partes precisamos calcular "10 - 1" para o número correto de divisores, como já sabemos.
+
+Como queremos apresentar valores decimais, dividiremos a variável i por 10.
+
+[i / 10 for i in range(1, 10)]COPIAR CÓDIGO
+Com isso, exibiremos a lista de 0.1 até 0.9.
+
+Para calcularmos os decis, bastará reescrevermos a linha de quantile() e passarmos o código que construiu esta última lista.
+
+dados.Renda.quantile([i / 10 for i in range(1, 10)])COPIAR CÓDIGO
+0.1    350.0
+0.2    788.0
+0.3    800.0
+0.4   1000.0
+0.5   1200.0
+0.6   1500.0
+0.7   1900.0
+0.8   2500.0
+0.9   4000.0
+Name: Renda, dtype:float64COPIAR CÓDIGO
+Como resultado, veremos todos os decis criados, bem como as porcentagens e valores que dividem.
+
+Na célula seguinte, calcularemos os percentis da mesma maneira, apenas fazendo a divisão de i por 100 e estabelecendo o range() de 1 a 99.
+
+dados.Renda.quantile([i / 100 for i in range(1, 99)])COPIAR CÓDIGO
+Isso nos retornará uma lista com 99 divisores e seus valores.
+
+Notaremos a repetição do valor 788.0 em muitas posições, o qual dividia os primeiros 20% no cálculos dos decis anteriormente.
+
+Como o percentil varia a cada 1%, poderemos ver a passagem do valor 788.0 para 789.0 da posição 0.28 para 0.29, comprovando a maior precisão deste cálculo. Em uma análise estatística, este fato nos dirá que 28% dos domicílios recebem uma renda mensal de até um salário mínimo apenas.
+
+Na célula seguinte, faremos uma representação gráfica ax da variável Idade utilizando o método distplot() da biblioteca Seaborn que herda de matplotlib.
+
+Construiremos um histograma acumulado com dois parâmetros extras; o hist_kws sendo igual ao dicionário 'cumulative' como True e a função de densidade kde_kws da mesma maneira.
+
+Em seguida, daremos um título e nomearemos os ylabel e xlabel como 'Acumulado' e 'Anos' com tamanho de fonte 14 respectivamente, e então rodaremos a célula.
+
+ax = sns.distplot(dados.Idade,
+                  hist_kws = {'cumulative': True},
+                  kde_kws = {'cumulative': True})
+ax.figure.set_size_inches(14, 6)
+ax.set_title('Distribuição de Frequências Acumulada', fontsize=18)
+ax.set_ylabel('Acumulado', fontsize=14)
+ax.set_xlabel('Anos', fontsize=14)
+axCOPIAR CÓDIGO
+Gráfico com 99 barras, contendo curva crescente, contínua e progressiva a partir de "20" anos, até a estabilidade em "80" do eixo "x" e "1.0" do eixo "y".
+
+Como resultado, veremos um gráfico acumulativo.
+
+Para termos ainda mais clareza, construiremos a medida decil da Idade com o mesmo comando feito para a Renda anteriormente.
+
+dados.Idade.quantile([i / 10 for i in range(1, 10)])COPIAR CÓDIGO
+0.1   28.0
+0.2   33.0
+0.3   36.0
+0.4   40.0
+0.5   43.0
+0.6   47.0
+0.7   51.0
+0.8   55.0
+0.9   61.0
+Name: Idade, dtype:float64COPIAR CÓDIGO
+Com o retorno, poderemos constatar que 40% das pessoas entrevistadas possuem até quarenta anos de idade, ou que 90% possuem menos de 61 anos por exemplo.
+
+Em seguida, construiremos sua representação gráfica, passando o número de bins como 10 no terceiro parâmetro de distplot()
+
+ax = sns.distplot(dados.Idade,
+                  hist_kws = {'cumulative': True},
+                  kde_kws = {'cumulative': True},
+                  bins = 10)
+ax.figure.set_size_inches(14, 6)
+ax.set_title('Distribuição de Frequências Acumulada', fontsize=18)
+ax.set_ylabel('Acumulado', fontsize=14)
+ax.set_xlabel('Anos', fontsize=14)
+axCOPIAR CÓDIGO
+Gráfico com 9 barras, contendo curva crescente, contínua e progressiva a partir de "20" anos, até a estabilidade em "80" do eixo "x" e "1.0" do eixo "y".
+
+Com este gráfico mais preciso, poderemos comparar os resultados da tabela de decis e tirar conclusões analíticas.
+
+A seguir, veremos a criação do boxplot por meio dos quartis calculados na primeira célula deste passo.
+[21:55, 03/11/2022] ${Raphael_Rissoli}: Nesta etapa, falaremos sobre as Medidas de Dispersão.
+
+Anteriormente, abordamos as Medidas de Tendência Central e Separatrizes que sumarizam o dataset analisados.
+
+Porém, nem sempre são suficientes para distinguir conjunto de dados diferentes, principalmente quando têm uma variação muito significativa.
+
+Se pegarmos as notas médias do df que criamos como exemplo com o boletim de três alunos em sete matérias escolares, veremos que Fulano e Sicrano possuem o mesmo valor.
+
+df.mean()COPIAR CÓDIGO
+Matérias
+Beltrano   5.142867
+Fulano     7.714286
+Sicrano    7.714286
+dtype: float64COPIAR CÓDIGO
+Como temos poucas observações nesse conjunto, poderemos fazer uma análise prévia rapidamente com a tabela:
+
+dfCOPIAR CÓDIGO
+Matérias	Beltrano	Fulano	Sicrano
+Matemática	10.0	8	7.5
+Português	2.0	10	8.0
+Inglês	0.5	4	7.0
+Geografia	1.0	8	8.0
+História	3.0	6	8.0
+Física	9.5	10	8.5
+Química	10.0	8	7.0
+Sicrano possui notas menos dispersas e mais constantes, com notas altas e valores próximos em todas as matérias. Ao passo que Fulano apresenta um maior desempenho em algumas e menor em outras de maneira mais inconstante.
+
+Se calcularmos a mediana, veremos que ambos os alunos possuem o mesmo resultado também.
+
+df.median()COPIAR CÓDIGO
+Matérias
+Beltrano   3.0
+Fulano     8.0
+Sicrano    8.0
+dtype: float64COPIAR CÓDIGO
+Ou seja, essas estatísticas de tendência central que estudamos não identificam essas questões que observamos diretamente no boletim. Porém, com um conjunto de dados enorme, será preciso caracterizar com precisão.
+
+Portanto, precisaremos da informação de Dispersão.
+
+Começaremos abordando o desvio médio absoluto com a seguinte fórmula:
+
+"DM" é igual ao somatório do desvio formado pelo módulo de "X" inicial índice "i" menos complemento de "X" para pegar os números absolutos, i variando de 1 a n, divido por n.
+
+"DM" é igual ao somatório desses desvios, formado pelo módulo de "X" índice "i" que é o valor de cada nota do df menos a média geral "X". A última parte entre barras significa que somente pegaremos os valores absolutos, ou seja, os positivos.
+
+Em um caso onde a média é maior do que o valor, como o complemento de "X" sendo igual a "10" e "X" no índice "i" for igual a "2" por exemplo, o resultado final da conta será "-8". Como queremos apenas "8", retiraremos o sinal de subtração, e entenderemos o porquê adiante.
+
+Aplicaremos esta estatística para Fulano na célula nesta parte do notebook. Chamaremos a variável como notas_fulano sendo igual a df[] contendo 'Fulano' para gerarmos uma series.
+
+notas_fulano = df['Fulano']
+notas_fulanoCOPIAR CÓDIGO
+Matemática   8
+Português   10
+Inglês       4
+Geografia    8
+História     6
+Física      10
+Química      8
+Name: Fulano, dtype: int64COPIAR CÓDIGO
+Se aplicarmos ainda mais um par de colchetes dentro de df[], criaremos um DataFrame de fato com Pandas.
+
+notas_fulano = df[['Fulano']]
+notas_fulanoCOPIAR CÓDIGO
+Matérias	Fulano
+Matemática	8
+Português	10
+Inglês	4
+Geografia	8
+História	6
+Física	10
+Química	8
+Precisaremos de um DataFrame para adicionarmos novas variáveis que nos ajudarão a entendermos os cálculos melhor.
+
+Agora que já temos o "X" índice "i", descobriremos a média com uma nova variável nota_media_fulano sendo igual a notas_fulano com .mean(). Para recebermos apenas o valor, adicionaremos [0].
+
+nota_media_fulano = notas_fulano.mean()[0]
+nota_media_fulanoCOPIAR CÓDIGO
+Como resultado, obteremos a média 7.714285714285714.
+
+Em seguida, criaremos o 'Desvio' dentro do notas_fulano[]. este será igual a notas_fulano[] recebendo 'Fulano' menos nota_media_fulano. Por fim, exibiremos a variável.
+
+notas_fulano['Desvio'] = notas_fulano['Fulano'] - nota_media_fulano
+notas_fulanoCOPIAR CÓDIGO
+Matérias	Fulano	Desvio
+Matemática	8	0.285714
+Português	10	2.285714
+Inglês	4	-3.714286
+Geografia	8	0.285714
+História	6	-1.714286
+Física	10	2.285714
+Química	8	0.285714
+Notarem…
+[22:04, 03/11/2022] ${Raphael_Rissoli}: Neste passo, abordaremos a variância.
+
+Como o desvio absoluto que vimos anteriormente, esta Medida de Dispersão também é uma média dos desvios, porém não é calculado somente com valores absolutos, e sim os eleva ao quadrado para não precisarem usar o sinal de negativo.
+
+Portanto, calcularemos a soma do quadrado dos desvios dividido pelo número total.
+
+Teremos diferenças para calcularmos dados populacionais e amostrais. No caso da Estatística, geralmente trabalharemos com amostras.
+
+fórmulas da variância populacional e variância amostral
+
+O primeiro cálculo é representado por "sigma" ao quadrado, sendo igual ao somatório dos desvios em relação à média populacional representada por "mi" e dividido por "n".
+
+Já no segundo, dividiremos por "n - 1" conhecido como Fator de Correção de Bessel. Utilizando-o, teremos uma estimativa mais precisa do parâmetro populacional.
+
+Usaremos o df feito anteriormente; pegaremos o notas_fulano[] com 'Desvio', pois criaremos o desvio em relação à média elevado ao quadrado.
+
+Colocaremos Desvio entre parênteses e aspas simples seguido de ^2. Será igual notas_fulano[] com 'Desvio' com aplicação do método Pandas pow() recebendo 2 para elevar ao quadrado.
+
+notas_fulano['(Desvio)^2'] = notas_fulano['Desvio'].pow(2)
+notas_fulanoCOPIAR CÓDIGO
+Matérias	Fulano	Desvio	/Desvio/	(Desvio)^2
+Matemática	8	0.285714	0.285714	0.81633
+Português	10	2.285714	2.285714	5.224490
+Inglês	4	-3.714286	3.714286	13.795918
+Geografia	8	0.285714	0.285714	0.081633
+História	6	-1.714286	1.714286	2.938776
+Física	10	2.285714	2.285714	5.224490
+Química	8	0.285714	0.285714	0.081633
+Como resultado, veremos os valores das notas, o desvio, desvio absoluto e o desvio ao quadrado nas colunas.
+
+Para calcularmos a variância amostral na célula seguinte, adicionaremos notas_fulano[] com o desvio ao quadrado. Se aplicarmos direto a média mean() como fizemos anteriormente, o sistema usará o "n" como denominador, e queremos utilizar "n - 1".
+
+Faremos o cálculo manualmente por meio da soma .sum() dividido por len() contendo notas_fulano entre parênteses para pegarmos o número de registros do conjunto e subtrairmos 1.
+
+notas_fulano['(Desvio)^2'].sum() / (len(notas_fulano) - 1)COPIAR CÓDIGO
+O resultado será o valor 4.5714285714857 da variância das notas de Fulano.
+
+Para calcularmos de maneira bem mais simples com Pandas, criaremos uma nova variável chamada variancia sendo igual a notas_fulano[] com as notas de 'Fulano' seguido do método var(). Por fim, exibiremos o resultado.
+
+variancia = notas_fulano['Fulano'].var()
+varianciaCOPIAR CÓDIGO
+O valor do retorno será igual ao apresentado antes.
+
+Como elevamos os desvios ao quadrado, também elevaremos as unidades da variância; suporemos que estamos calculando a Altura em metros de nosso dataset. Como resultado, obteremos em metros ao quadrado, o qual é uma unidade de área, tornando mais difícil a interpretação dos dados.
